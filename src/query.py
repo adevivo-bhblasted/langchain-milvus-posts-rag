@@ -1,12 +1,11 @@
 from langchain_ollama.chat_models import ChatOllama
-from langchain_ollama.embeddings import OllamaEmbeddings
-from langchain_milvus import Milvus
 from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
-from milvus_client.connection import milvus_client
-from commons.constants.milvus import Constants as MilvusConstants
-from commons.constants.ollama import Constants as OllamaConstants
+from .milvus_utils.connection import milvus_client
+from .commons.constants.milvus import Constants as MilvusConstants
+from .commons.constants.ollama import Constants as OllamaConstants
+from .milvus_utils.vectorstore import get_vectorstore
 
 
 def query_posts(query_str: str) -> str:
@@ -17,15 +16,9 @@ def query_posts(query_str: str) -> str:
 
     # ---- Initialize LLM & Embeddings ---- #
     llm = ChatOllama(model=OllamaConstants.OLLAMA_CHAT_MODEL)
-    embeddings = OllamaEmbeddings(model=OllamaConstants.OLLAMA_EMBEDDING_MODEL)
-
 
     # ---- Initialize Vector Store ---- #
-    vectorstore = Milvus(
-        embedding_function=embeddings,
-        connection_args={"host": MilvusConstants.HOST_NAME, "port": MilvusConstants.PORT},
-        collection_name=MilvusConstants.COLLECTION_NAME,
-    )
+    vectorstore = get_vectorstore()
 
     # ---- Define Prompt Template ---- #
     PROMPT_TEMPLATE = """Human: You are an AI assistant providing fact-based answers using statistical information where possible.

@@ -4,7 +4,7 @@ from pymilvus import (
     FieldSchema, 
     DataType, 
 )
-from milvus_client.connection import milvus_client
+from milvus_utils.connection import milvus_client
 from commons.constants.milvus import Constants as MilvusConstants
 
 load_dotenv()
