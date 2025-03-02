@@ -1,7 +1,7 @@
 from pymilvus import (
     MilvusClient
 )
-from commons.constants.milvus import Constants as MilvusConstants
+from ..commons.constants.milvus import Constants as MilvusConstants
 
 
 

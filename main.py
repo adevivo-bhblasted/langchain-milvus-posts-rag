@@ -1,8 +1,8 @@
 import argparse
 
-from .milvus_utils.vectorstore import add_document_from_text
+from src.milvus_utils.vectorstore import add_texts_to_vectorstore
 
-from .query import query_posts
+from src.query import query_posts
 
 
 def main():
@@ -16,7 +16,7 @@ def main():
     if args.action == 'create':
         if not args.input:
             args.input = input("Enter your text to ingest: ")
-        add_document_from_text(args.input)
+        add_texts_to_vectorstore([args.input])
     elif args.action == 'query':
         if not args.input:
             args.input = input("Enter your query: ")
